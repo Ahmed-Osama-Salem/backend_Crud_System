@@ -72,7 +72,7 @@ app.put("/update/:mongoId", async (req, res) => {
   const mongoId = req.params.mongoId;
 
   try {
-    await TablePayModel.findByIdAndUpdate(mongoId, {
+    await TableModel.findByIdAndUpdate(mongoId, {
       "allText.twqi3": newConstrDate,
     });
     res.send("done");
