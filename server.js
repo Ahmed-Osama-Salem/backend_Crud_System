@@ -65,6 +65,23 @@ app.delete("/delete/:mongoId", async (req, res) => {
   res.send("deleted");
 });
 
+// update constSheet supply date
+
+app.put("/update/:mongoId", async (req, res) => {
+  const newConstrDate = req.body.newConstrDate;
+  const mongoId = req.params.mongoId;
+
+  try {
+    await TablePayModel.findByIdAndUpdate(mongoId, {
+      "allText.twqi3": newConstrDate,
+    });
+    res.send("done");
+  } catch (err) {
+    console.log(err);
+    res.send("faild update");
+  }
+});
+
 //update cell from database and react
 
 // the PaySheet connect to mongodb
