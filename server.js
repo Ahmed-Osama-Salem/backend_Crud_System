@@ -187,11 +187,18 @@ app.put("/updatePrim/:mongoId", async (req, res) => {
   const mongoId = req.params.mongoId;
   const newPaid = req.body.newPaid;
   const newSubPaid = req.body.newSubPaid;
+  const newNote = req.body.newNote;
+  const newSign = req.body.newSign;
+  const newTotal = req.body.newTotal;
+
   try {
     await TablePrimModel.findByIdAndUpdate(mongoId, {
       "formData.supplyDate": newData,
       "formData.paid": newPaid,
       "formData.subPaid": newSubPaid,
+      "formData.notes": newNote,
+      "formData.sign": newSign,
+      "formData.total": newTotal,
     });
     res.send("done");
   } catch (err) {
@@ -246,17 +253,18 @@ app.delete("/deleteStore/:mongoId", async (req, res) => {
   res.send("deleted");
 });
 
-// update primSheet supply date
+// update StoreSheet supply date
 
 app.put("/updateStore/:mongoId", async (req, res) => {
   const newDate = req.body.newDate;
   const mongoId = req.params.mongoId;
   const newNote = req.body.newNote;
-
+  const newStoreSign = req.body.newStoreSign;
   try {
     await TableStoreModel.findByIdAndUpdate(mongoId, {
       "formText.storeDate": newDate,
       "formText.notes": newNote,
+      "formText.sign": newStoreSign,
     });
     res.send("done");
   } catch (err) {
