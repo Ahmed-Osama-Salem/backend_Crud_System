@@ -5,6 +5,7 @@ const TableModel = require("./models/ConstructTable");
 const TablePayModel = require("./models/PayTabledb");
 const TablePrimModel = require("./models/PrimTabledb");
 const TableStoreModel = require("./models/StoreTabledb");
+const TableNewProjectModel = require("./models/NewConstuctTable");
 require("dotenv").config();
 
 const app = express();
@@ -282,6 +283,71 @@ app.put("/updateStore/:mongoId", async (req, res) => {
       "formText.storeDate": newDate,
       "formText.notes": newNote,
       "formText.sign": newStoreSign,
+    });
+    res.send("done");
+  } catch (err) {
+    console.log(err);
+    res.send("faild update");
+  }
+});
+
+//new project table
+
+//post all frontend values to database
+
+app.post("/insertNewPro", async (req, res) => {
+  const allText = req.body.allText;
+  const test = req.body.text;
+  const textMosad = req.body.textMosad;
+  const id = req.body.id;
+  const time = req.body.time;
+
+  const constructionTable = new TableNewProjectModel({
+    id: id,
+    time: time,
+    allText: allText,
+    text: test,
+    textMosad: textMosad,
+  });
+
+  try {
+    await constructionTable.save();
+    res.send("succsess insert");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//render and read data that posted in database
+
+app.get("/readNewPro", (req, res) => {
+  TableNewProjectModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(result);
+  });
+});
+
+//delete cell from database
+
+app.delete("/deleteNewPro/:mongoId", async (req, res) => {
+  const mongoId = req.params.mongoId;
+
+  await TableNewProjectModel.findByIdAndRemove(mongoId).exec();
+  res.send("deleted");
+});
+
+// update constSheet supply date
+
+app.put("/updateNewPro/:mongoId", async (req, res) => {
+  const newConstrDate = req.body.newConstrDate;
+  const mongoId = req.params.mongoId;
+
+  try {
+    await TableNewProjectModel.findByIdAndUpdate(mongoId, {
+      "allText.twqi3": newConstrDate,
     });
     res.send("done");
   } catch (err) {
