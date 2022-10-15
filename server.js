@@ -70,29 +70,29 @@ app.delete("/delete/:mongoId", async (req, res) => {
 app.put("/update/:mongoId", async (req, res) => {
   const newConstrDate = req.body.newConstrDate;
   const mongoId = req.params.mongoId;
-  const dateNow = req.body.dateNow;
-  const rkmElw7da = req.body.rkmElw7da;
-  const elbnd = req.body.elbnd;
-  const techNumber = req.body.techNumber;
-  const mosadNumber = req.body.mosadNumber;
-  const noteAdd = req.body.noteAdd;
-  const kmiatMon = req.body.kmiatMon;
-  const tnfizState = req.body.tnfizState;
-  const angaz = req.body.angaz;
-  const notes = req.body.notes;
+  const dateNowUpdate = req.body.dateNowUpdate;
+  const rkmElw7daUpdate = req.body.rkmElw7daUpdate;
+  const elbndUpdate = req.body.elbndUpdate;
+  const techNumberUpdate = req.body.techNumberUpdate;
+  const mosadNumberUpdate = req.body.mosadNumberUpdate;
+  const noteAddUpdate = req.body.noteAddUpdate;
+  const kmiatMonUpdate = req.body.kmiatMonUpdate;
+  const tnfizStateUpdate = req.body.tnfizStateUpdate;
+  const angazUpdate = req.body.angazUpdate;
+  const notesUpdate = req.body.notesUpdate;
   try {
     await TableModel.findByIdAndUpdate(mongoId, {
       "allText.twqi3": newConstrDate,
-      "allText.dateNow": dateNow,
-      "allText.rkmElw7da": rkmElw7da,
-      "allText.elbnd": elbnd,
-      "allText.techNumber": techNumber,
-      "allText.mosadNumber": mosadNumber,
-      "allText.noteAdd": noteAdd,
-      "allText.kmiatMon": kmiatMon,
-      "allText.tnfizState": tnfizState,
-      "allText.angaz": angaz,
-      "allText.notes": notes,
+      "allText.dateNow": dateNowUpdate,
+      "allText.rkmElw7da": rkmElw7daUpdate,
+      "allText.elbnd": elbndUpdate,
+      "allText.techNumber": techNumberUpdate,
+      "allText.mosadNumber": mosadNumberUpdate,
+      "allText.noteAdd": noteAddUpdate,
+      "allText.kmiatMon": kmiatMonUpdate,
+      "allText.tnfizState": tnfizStateUpdate,
+      "allText.angaz": angazUpdate,
+      "allText.notes": notesUpdate,
     });
     res.send("done");
   } catch (err) {
