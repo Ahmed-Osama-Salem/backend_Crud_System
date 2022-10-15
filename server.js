@@ -26,11 +26,10 @@ app.post("/insert", async (req, res) => {
   const allText = req.body.allText;
   const test = req.body.text;
   const textMosad = req.body.textMosad;
-  const id = req.body.id;
+
   const time = req.body.time;
 
   const constructionTable = new TableModel({
-    id: id,
     time: time,
     allText: allText,
     text: test,
