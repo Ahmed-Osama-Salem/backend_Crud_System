@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
 const tableTwoSchema = mongoose.Schema({
-  dateNow: {
-    type: String,
-    required: true,
-  },
+  
   timeNow: {
     type: String,
     required: true,

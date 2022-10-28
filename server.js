@@ -65,7 +65,7 @@ app.delete("/delete/:mongoId", async (req, res) => {
   res.send("deleted");
 });
 
-// update constSheet supply date
+// update constSheet supply date update
 
 app.put("/update/:mongoId", async (req, res) => {
   const newConstrDate = req.body.newConstrDate;
@@ -109,11 +109,11 @@ app.put("/update/:mongoId", async (req, res) => {
 
 app.post("/insertPay", async (req, res) => {
   const allPayText = req.body.allPayText;
-  const dateNow = req.body.dateNow;
+  // const dateNow = req.body.dateNow;
   const timeNow = req.body.timeNow;
 
   const constructionTable = new TablePayModel({
-    dateNow: dateNow,
+    // dateNow: dateNow,
     timeNow: timeNow,
     allPayText: allPayText,
   });
@@ -150,16 +150,29 @@ app.delete("/deletePay/:mongoId", async (req, res) => {
 // update paySheet supply date
 
 app.put("/updatePay/:mongoId", async (req, res) => {
-  const newPayDate = req.body.newPayDate;
   const mongoId = req.params.mongoId;
+  const dateNowUP = req.body.dateNowUP;
+  const elwahdaNameUP = req.body.elwahdaNameUP;
+  const jobsUP = req.body.jobsUP;
+  const contractorNameUP = req.body.contractorNameUP;
   const newPayReciver = req.body.newPayReciver;
+  const bandUP = req.body.bandUP;
+  const unitUP = req.body.unitUP;
+  const kmiaUP = req.body.kmiaUP;
+  const newPayDate = req.body.newPayDate;
   const newPayNote = req.body.newPayNote;
   const newPaySign = req.body.newPaySign;
-
   try {
     await TablePayModel.findByIdAndUpdate(mongoId, {
-      "allPayText.payDate": newPayDate,
+      "allPayText.dateNow": dateNowUP,
+      "allPayText.elwahdaName": elwahdaNameUP,
+      "allPayText.jobs": jobsUP,
+      "allPayText.contractorName": contractorNameUP,
       "allPayText.reciverName": newPayReciver,
+      "allPayText.band": bandUP,
+      "allPayText.unit": unitUP,
+      "allPayText.kmia": kmiaUP,
+      "allPayText.payDate": newPayDate,
       "allPayText.note": newPayNote,
       "allPayText.signiture": newPaySign,
     });
