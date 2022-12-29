@@ -80,6 +80,8 @@ app.put("/update/:mongoId", async (req, res) => {
   const tnfizStateUpdate = req.body.tnfizStateUpdate;
   const angazUpdate = req.body.angazUpdate;
   const notesUpdate = req.body.notesUpdate;
+  const fromUpdate = req.body.fromUpdate;
+  const toUpdate = req.body.toUpdate;
   try {
     await TableModel.findByIdAndUpdate(mongoId, {
       "allText.twqi3": newConstrDate,
@@ -93,11 +95,13 @@ app.put("/update/:mongoId", async (req, res) => {
       "allText.tnfizState": tnfizStateUpdate,
       "allText.angaz": angazUpdate,
       "allText.notes": notesUpdate,
+      "allText.from": fromUpdate,
+      "allText.to":toUpdate,
     });
-    res.send("done");
+    res.status(200).send("update data successfully");
   } catch (err) {
     console.log(err);
-    res.send("faild update");
+    res.status(404).send("faild update");
   }
 });
 
