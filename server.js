@@ -6,6 +6,7 @@ const TablePayModel = require("./models/PayTabledb");
 const TablePrimModel = require("./models/PrimTabledb");
 const TableStoreModel = require("./models/StoreTabledb");
 const TableNewProjectModel = require("./models/NewConstuctTable");
+const UserModel = require("./models/Users");
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +20,26 @@ mongoose.connect(
   "mongodb+srv://elfit12345:elfit12345@crud.vgwhvmn.mongodb.net/constructionTable?retryWrites=true&w=majority",
   { useNewUrlParser: true }
 );
+
+
+//users Register 
+
+app.post("/user/register",async(req,res)=>{
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const job = req.body.job;
+
+  UserModel.create(name,email,password,job,(err,user)=>{
+    if(err){
+      console.log(err),"err";
+      res.status(404).send("no data of user");
+      return err
+    }
+    console.log(user,"succsess");
+    res.status(200).send(user)
+  })
+})
 
 //post all frontend values to database
 
