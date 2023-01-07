@@ -35,7 +35,7 @@ app.post("/register",async(req,res)=>{
       res.status(404).send("no data of user");
     
     console.log(user,"succsess");
-    res.status(200).send(user)
+    return res.status(200).send(user)
   })
 })
 
