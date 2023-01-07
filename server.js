@@ -24,18 +24,16 @@ mongoose.connect(
 
 //users Register 
 
-app.post("/user/register",async(req,res)=>{
+app.post("/register",async(req,res)=>{
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
   const job = req.body.job;
 
   UserModel.create(name,email,password,job,(err,user)=>{
-    if(err){
-      console.log(err),"err";
+    if(err)
       res.status(404).send("no data of user");
-      return err
-    }
+    
     console.log(user,"succsess");
     res.status(200).send(user)
   })
