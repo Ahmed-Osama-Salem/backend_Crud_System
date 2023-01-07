@@ -30,13 +30,19 @@ app.post("/register",async(req,res)=>{
   const password = req.body.password;
   const job = req.body.job;
 
-  UserModel.create(name,email,password,job,(err,user)=>{
-    if(err)
-      res.status(404).send("no data of user");
-    
-    console.log(user,"succsess");
-    return res.status(200).send(user)
-  })
+ const usersTable = new UserModel({
+  name: name,
+  password:password,
+  email:email,
+  job: job,
+ });
+ try {
+  await usersTable.save();
+  res.status(200).send("succsess insert user to db");
+} catch (err) {
+  console.log(err);
+  res.status(404).send("noooo data posted");
+}
 })
 
 //post all frontend values to database
