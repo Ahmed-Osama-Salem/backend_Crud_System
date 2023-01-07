@@ -38,7 +38,8 @@ app.post("/register",async(req,res)=>{
  });
  try {
   await usersTable.save();
-  res.status(200).send("succsess insert user to db");
+  res.send(name,email,password,job)
+  res.status(200).send(`Welcome ${name} you just joined to EL-FiT Group`);
 } catch (err) {
   console.log(err);
   res.status(404).send("noooo data posted");
