@@ -28,10 +28,12 @@ app.post("/register",async(req,res)=>{
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  const phone = req.body.phone;
   const job = req.body.job;
 
  const usersTable = new UserModel({
   name: name,
+  phone:phone,
   password:password,
   email:email,
   job: job,
@@ -41,7 +43,9 @@ app.post("/register",async(req,res)=>{
   res.status(200).json({data: usersTable})
   // res.status(200).send(`Welcome ${name} you just joined to EL-FiT Group`);
 } catch (err) {
-  console.log(err);
+  if(password.length <= 5){
+    res.status(400).json({message: "your password is too short"})
+  }
   res.status(404).send("noooo data posted");
 }
 })
