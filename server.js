@@ -53,6 +53,27 @@ app.post("/register",async(req,res)=>{
 }
 })
 
+// user login
+
+app.post("/login",(req,res)=>{
+  const {email,password} = req.body;
+ if(!email || !password){
+  res.status(422).json(!email ? {message: "Email is Required"} : {message: "Password is Required"})
+ }
+  UserModel.find({email}, (err, user) => {
+    if (err) {
+      res.send(err);
+    }
+
+    if(!user){
+      res.status(404).json({message: "user Not Found"})
+    }else{
+     res.status(200).send(user) 
+    }
+    res.send(result);
+  });
+})
+
 //post all frontend values to database
 
 app.post("/insert", async (req, res) => {
