@@ -62,13 +62,14 @@ app.post("/login",(req,res)=>{
  }
   UserModel.find({email,password}, (err, user) => {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     }
 
     if(!user){
-      res.status(404).json({message: "user Not Found"})
+      return res.status(404).send({ message: "User Not found." });
     }
-    res.status(200).json({data:user,code: 200, message: "Welcome back"}) 
+      res.status(200).send({user,code: 200, message: "Welcome back"}) 
+
   });
 })
 
