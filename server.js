@@ -15,10 +15,11 @@ app.use(express.json());
 app.use(cors());
 
 //connect to mongodb by mongodb atlas [cluster]
+mongoose.set('strictQuery', true);
 
 mongoose.connect(
   "mongodb+srv://elfit12345:elfit12345@crud.vgwhvmn.mongodb.net/constructionTable?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
+  // { useNewUrlParser: true }
 );
 
 
