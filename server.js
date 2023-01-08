@@ -60,7 +60,7 @@ app.post("/login",(req,res)=>{
  if(!email || !password){
   res.status(422).json(!email ? {message: "Email is Required"} : {message: "Password is Required"})
  }
-  UserModel.find({email}, (err, user) => {
+  UserModel.find({email,password}, (err, user) => {
     if (err) {
       res.send(err);
     }
@@ -68,7 +68,7 @@ app.post("/login",(req,res)=>{
     if(!user){
       res.status(404).json({message: "user Not Found"})
     }else{
-     res.status(200).send(user) 
+     res.status(200).send(user).json({code: 200}) 
     }
     res.send(result);
   });
