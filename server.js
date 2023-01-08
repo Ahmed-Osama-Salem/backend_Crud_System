@@ -46,9 +46,9 @@ app.post("/register",async(req,res)=>{
     res.status(400).json({message: "your password is too short"})
   }
   if(name === "" || phone === ""){
-    res.status(400).json(phone === "" ? { message: "Please fill phone field" } :{message: "Please fill name Field"})
+    res.status(422).json(phone === "" ? { message: "Please fill phone field" } :{message: "Please fill name Field"})
   }
-  res.status(404).send("noooo data posted");
+  res.status(404).send("user not found");
 }
 })
 
