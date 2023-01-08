@@ -67,10 +67,8 @@ app.post("/login",(req,res)=>{
 
     if(!user){
       res.status(404).json({message: "user Not Found"})
-    }else{
-     res.status(200).json({data:user,code: 200}) 
     }
-    res.status(200).send(user);
+    res.status(200).json({data:user,code: 200, message: "Welcome back"}) 
   });
 })
 
