@@ -41,7 +41,7 @@ app.post("/register",async(req,res)=>{
  });
  try {
   await usersTable.save();
-  res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up"})
+  res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up",code: 200})
 } catch (err) {
   if(password.length <= 5){
     res.status(400).json({message: "your password is too short"})
@@ -68,9 +68,9 @@ app.post("/login",(req,res)=>{
     if(!user){
       res.status(404).json({message: "user Not Found"})
     }else{
-     res.status(200).send(user).json({code: 200}) 
+     res.status(200).json({data:user,code: 200}) 
     }
-    res.send(result);
+    res.status(200).send(user);
   });
 })
 
