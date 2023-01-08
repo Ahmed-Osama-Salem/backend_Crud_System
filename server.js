@@ -40,11 +40,13 @@ app.post("/register",async(req,res)=>{
  });
  try {
   await usersTable.save();
-  res.status(200).json({data: usersTable})
-  // res.status(200).send(`Welcome ${name} you just joined to EL-FiT Group`);
+  res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up"})
 } catch (err) {
   if(password.length <= 5){
     res.status(400).json({message: "your password is too short"})
+  }
+  if(name === "" || phone === ""){
+    res.status(400).json(phone === "" ? { message: "Please fill phone field" } :{message: "Please fill name Field"})
   }
   res.status(404).send("noooo data posted");
 }
