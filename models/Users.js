@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength:5,
   },
+  image:{
+    type:String,
+  }
 });
 
 const userTable = mongoose.model("userTable", userSchema);

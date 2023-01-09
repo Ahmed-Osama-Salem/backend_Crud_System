@@ -34,6 +34,7 @@ app.post("/register",async(req,res)=>{
   const password = req.body.password;
   const phone = req.body.phone;
   const job = req.body.job;
+  const image = req.body.image;
   const hashedPwd = await bcrypt.hash(password, saltRounds);
 
  const usersTable = new UserModel({
@@ -42,6 +43,7 @@ app.post("/register",async(req,res)=>{
   password:hashedPwd,
   email:email,
   job: job,
+  image: image,
  });
  try {
   await usersTable.save();
