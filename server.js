@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 const TableModel = require("./models/ConstructTable");
 const TablePayModel = require("./models/PayTabledb");
@@ -13,6 +14,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+const saltRounds = 10;
+
 
 //connect to mongodb by mongodb atlas [cluster]
 mongoose.set('strictQuery', true);
@@ -31,17 +34,18 @@ app.post("/register",async(req,res)=>{
   const password = req.body.password;
   const phone = req.body.phone;
   const job = req.body.job;
+  const hashedPwd = await bcrypt.hash(password, saltRounds);
 
  const usersTable = new UserModel({
   name: name,
   phone:phone,
-  password:password,
+  password:hashedPwd,
   email:email,
   job: job,
  });
  try {
   await usersTable.save();
-  res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up",code: 200})
+  res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up",code: 200 , success:true})
 } catch (err) {
   if(password.length <= 5){
     res.status(400).json({message: "your password is too short"})
@@ -55,22 +59,39 @@ app.post("/register",async(req,res)=>{
 
 // user login
 
-app.post("/login",(req,res)=>{
+app.post("/login",async(req,res)=>{
   const {email,password} = req.body;
  if(!email || !password){
   res.status(422).json(!email ? {message: "Email is Required"} : {message: "Password is Required"})
  }
-  UserModel.find({email,password}, (err, user) => {
-    if (err) {
-      res.status(500).send(err);
+ try {
+  const user = await UserModel.findOne({ email});
+  console.log(user);
+  if (user) {
+    const cmp = await bcrypt.compare(password, user.password);
+    if (cmp) {
+     res.status(200).send({success:true,user,code: 200, message: "Welcome to EL-Fit Group"}) 
+} else {
+      res.send("Wrong email or password.");
     }
+  } else {
+    res.send("Wrong email or password.");
+  }
+} catch (error) {
+  console.log(error);
+  res.status(500).send("Internal Server error Occured");
+}
+  // UserModel.find({email,password}, (err, user) => {
+  //   if (err) {
+  //     res.status(500).send(err);
+  //   }
 
-    if(!user){
-      return res.status(404).send({ message: "User Not found." });
-    }
-      res.status(200).send({user,code: 200, message: "Welcome back"}) 
+  //   if(!user){
+  //     return res.status(404).send({ message: "User Not found." });
+  //   }
+  //     res.status(200).send({user,code: 200, message: "Welcome back"}) 
 
-  });
+  // });
 })
 
 //post all frontend values to database
