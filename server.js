@@ -37,17 +37,26 @@ app.post("/register",async(req,res)=>{
   const job = req.body.job;
   const image = req.body.image;
   const hashedPwd = await bcrypt.hash(password, saltRounds);
-  const buffer = Buffer.from(image, "base64");
-  const imageFile = fs.writeFileSync("new-path.jpg", buffer);
- 
+//   const buffer = Buffer.from(image, "base64");
+//   const imageFile = fs.writeFileSync("new-path.jpg", buffer);
+//  console.log(imageFile,"djsfdjs");
+const path = './images/'+Date.now()+'.png'
+const base64Data = image.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+
+fs.writeFileSync(path, base64Data,  {encoding: 'base64'},function(err,data) {
+  console.log(err);
+  res.send(data);
+});
+
  const usersTable = new UserModel({
   name: name,
   phone:phone,
   password:hashedPwd,
   email:email,
   job: job,
-  image: imageFile,
+  image: path,
  });
+
  try {
   await usersTable.save();
   res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up",code: 200 , success:true})
