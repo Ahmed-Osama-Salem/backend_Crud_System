@@ -77,10 +77,10 @@ app.post("/login",async(req,res)=>{
     if (cmp) {
      res.status(200).send({success:true,user,code: 200, message: "Welcome to EL-Fit Group"}) 
 } else {
-      res.status(400).send("Wrong email or password.");
+      res.status(400).json({success:false,message: "Wrong email or password"})
     }
   } else {
-    res.status(400).send("Wrong email or password.");
+    res.status(404).json({success:false,message: "User Not found."})
   }
 } catch (error) {
   console.log(error);
