@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 const cors = require("cors");
 const TableModel = require("./models/ConstructTable");
 const TablePayModel = require("./models/PayTabledb");
@@ -36,14 +37,16 @@ app.post("/register",async(req,res)=>{
   const job = req.body.job;
   const image = req.body.image;
   const hashedPwd = await bcrypt.hash(password, saltRounds);
-
+  const buffer = Buffer.from(image, "base64");
+  const imageFile = fs.writeFileSync("new-path.jpg", buffer);
+ 
  const usersTable = new UserModel({
   name: name,
   phone:phone,
   password:hashedPwd,
   email:email,
   job: job,
-  image: image,
+  image: imageFile,
  });
  try {
   await usersTable.save();
