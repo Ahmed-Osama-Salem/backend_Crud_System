@@ -47,7 +47,7 @@ app.post("/register",async(req,res)=>{
   job: job,
   image: image,
  });
- 
+
  try {
   await usersTable.save();
   res.status(200).json({data: usersTable,message: "Welcome ,you are successfully signed up",code: 200 , success:true})
@@ -77,10 +77,10 @@ app.post("/login",async(req,res)=>{
     if (cmp) {
      res.status(200).send({success:true,user,code: 200, message: "Welcome to EL-Fit Group"}) 
 } else {
-      res.send("Wrong email or password.");
+      res.status(400).send("Wrong email or password.");
     }
   } else {
-    res.send("Wrong email or password.");
+    res.status(400).send("Wrong email or password.");
   }
 } catch (error) {
   console.log(error);
