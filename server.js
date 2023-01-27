@@ -71,7 +71,6 @@ app.post("/login",async(req,res)=>{
  }
  try {
   const user = await UserModel.findOne({ email});
-  console.log(user);
   if (user) {
     const cmp = await bcrypt.compare(password, user.password);
     if (cmp) {
@@ -86,18 +85,20 @@ app.post("/login",async(req,res)=>{
   console.log(error);
   res.status(500).send("Internal Server error Occured");
 }
-  // UserModel.find({email,password}, (err, user) => {
-  //   if (err) {
-  //     res.status(500).send(err);
-  //   }
-
-  //   if(!user){
-  //     return res.status(404).send({ message: "User Not found." });
-  //   }
-  //     res.status(200).send({user,code: 200, message: "Welcome back"}) 
-
-  // });
+  
 })
+
+//read & get users data that posted in database
+
+app.get("/users", (req, res) => {
+  UserModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.status(200).json({success:true,result,code:200});
+  });
+});
 
 //post all frontend values to database
 
